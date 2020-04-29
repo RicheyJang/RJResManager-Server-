@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Orders" table="orders" schema="finaltest">
+        <id name="id" column="id">
+            <generator class="native"></generator>
+        </id>
+        <property name="workshop" column="workshop"/>
+        <property name="useclass" column="useclass"/>
+        <property name="starttime" column="starttime"/>
+        <property name="usetime" column="usetime"/>
+        <property name="more" column="more"/>
+        <property name="teacher" column="teacher"/>
+        <property name="header" column="header"/>
+        <property name="admin" column="admin"/>
+        <property name="keeper" column="keeper"/>
+        <property name="accountant" column="accountant"/>
+        <property name="status" column="status"/>
+        <set name="items" cascade="all" lazy="true">
+            <key column="orderid" not-null="false"/>
+            <one-to-many class="pojo.Orderitems"/>
+        </set>
+    </class>
+</hibernate-mapping>

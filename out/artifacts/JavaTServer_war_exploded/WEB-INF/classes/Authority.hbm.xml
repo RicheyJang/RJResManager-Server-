@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Authority" table="authority" schema="finaltest">
+        <id name="id" column="id"/>
+        <property name="status" column="status"/>
+        <property name="teacher" column="teacher"/>
+        <property name="header" column="header"/>
+        <property name="admin" column="admin"/>
+        <property name="keeper" column="keeper"/>
+        <property name="accountant" column="accountant"/>
+    </class>
+</hibernate-mapping>
