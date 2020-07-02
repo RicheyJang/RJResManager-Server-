@@ -19,7 +19,7 @@
         <property name="keeper" column="keeper"/>
         <property name="accountant" column="accountant"/>
         <property name="status" column="status"/>
-        <set name="items" cascade="all" lazy="true">
+        <set name="items" cascade="all" lazy="true" inverse="true">
             <key column="orderid" not-null="false"/>
             <one-to-many class="pojo.Orderitems"/>
         </set>

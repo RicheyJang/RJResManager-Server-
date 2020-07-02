@@ -12,6 +12,6 @@
         <property name="cnt" column="cnt"/>
         <property name="status" column="status"/>
         <property name="more" column="more"/>
-        <many-to-one name="order" cascade="all" class="pojo.Orders" column="orderid" />
+        <many-to-one name="order" cascade="save-update" class="pojo.Orders" column="orderid" />
     </class>
 </hibernate-mapping>

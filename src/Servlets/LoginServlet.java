@@ -1,5 +1,6 @@
 package Servlets;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,25 @@ import pojo.*;
 
 @WebServlet(name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
+	public void init(ServletConfig config){
+		System.out.println("init of Servlet");
+		Session session=HibernateFactory.getSession();
+		Config configs=Config.getConfig();
+		String hql="select status from Authority";
+		Query<String> query=session.createQuery(hql);
+		List<String> ls=query.list();
+		configs.statusList=new String[ls.size()+1];
+		int i=1;
+		configs.statusList[0]="0";
+		for(String s : ls)
+		{
+			configs.statusList[i]=s;
+			i++;
+		}
+		session.close();
+		System.out.println("init finish");
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONObject json=DealServlet.getRequestJsonObject(request);
 		String username=json.getString("username");

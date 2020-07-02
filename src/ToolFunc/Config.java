@@ -6,6 +6,7 @@ public class Config {
 	public String dataBaseName;
 	public String selectName;
 	public String selectPassword;
+	public String[] statusList;
 	private static Config config=null;
 	private Config()
 	{

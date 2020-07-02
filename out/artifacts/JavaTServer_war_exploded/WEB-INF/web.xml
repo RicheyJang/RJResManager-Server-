@@ -6,6 +6,7 @@
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>Servlets.LoginServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
@@ -21,5 +22,25 @@
     <servlet-mapping>
         <servlet-name>NewOrderServlet</servlet-name>
         <url-pattern>/neworder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ChangeOrderServlet</servlet-name>
+        <servlet-class>Servlets.ChangeOrderServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ChangeOrderServlet</servlet-name>
+        <url-pattern>/changeorder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ChangeStatusServlet</servlet-name>
+        <servlet-class>Servlets.ChangeStatusServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ChangeStatusServlet</servlet-name>
+        <url-pattern>/changestatus</url-pattern>
     </servlet-mapping>
 </web-app>
