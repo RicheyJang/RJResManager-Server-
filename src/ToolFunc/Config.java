@@ -6,6 +6,8 @@ public class Config {
 	public String dataBaseName;
 	public String selectName;
 	public String selectPassword;
+	public String rootName;
+	public String rootPassword;
 	public String[] statusList;
 	private static Config config=null;
 	private Config()
@@ -15,6 +17,8 @@ public class Config {
 		dataBaseName="finaltest";
 		selectName="ForSelect";
 		selectPassword="MyWeb008";
+		rootName="root";
+		rootPassword="admin";
 	}
 	public static Config getConfig() {
 		if(config==null)

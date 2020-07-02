@@ -17,6 +17,8 @@ public class HibernateFactory {
 	static {
 		try {
 			Configuration configuration = new Configuration().configure();
+			configuration.setProperty("hibernate.connection.username",Config.getConfig().rootName);
+			configuration.setProperty("hibernate.connection.password",Config.getConfig().rootPassword);
 			ourSessionFactory = configuration.buildSessionFactory();
 		} catch (Throwable ex) {
 			throw new ExceptionInInitializerError(ex);
