@@ -43,4 +43,14 @@
         <servlet-name>ChangeStatusServlet</servlet-name>
         <url-pattern>/changestatus</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FinishOrderServlet</servlet-name>
+        <servlet-class>Servlets.FinishOrderServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FinishOrderServlet</servlet-name>
+        <url-pattern>/finishorder</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -41,6 +41,19 @@ public class ChangeStatusServlet extends HttpServlet {
 		session.close();
 		return (ide==2 || ide==3);
 	}
+	private boolean checkDelAble(User user,Orders order) //订单能否撤回检测
+	{
+		if(order.getTeacher().compareTo(user.getTruename())!=0)
+			return false;
+		String[] ls=Config.getConfig().statusList;
+		int i;
+		for(i=0;i<ls.length;i++)
+		{
+			if(order.getStatus().compareTo(ls[i])==0)
+				break;
+		}
+		return i<=4;
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONObject json= DealServlet.getRequestJsonObject(request);
 		if(!(json.containsKey("userInformation") && json.containsKey("orderInformation")))
@@ -83,7 +96,7 @@ public class ChangeStatusServlet extends HttpServlet {
 		System.out.println("orderid : "+order.getId());
 		if(toStatus.compareTo(Config.getConfig().statusList[0])==0) //撤回订单
 		{
-			if(order.getTeacher().compareTo(user.getTruename())!=0)
+			if(!checkDelAble(user,order))
 			{
 				System.out.println("该用户无权撤回该订单");
 				response.setStatus(402);

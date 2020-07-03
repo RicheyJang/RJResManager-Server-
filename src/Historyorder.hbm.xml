@@ -10,6 +10,8 @@
         <property name="useclass" column="useclass"/>
         <property name="starttime" column="starttime"/>
         <property name="usetime" column="usetime"/>
+        <property name="backtime" column="backtime"/>
+        <property name="outtime" column="outtime"/>
         <property name="more" column="more"/>
         <property name="teacher" column="teacher"/>
         <property name="header" column="header"/>
@@ -17,5 +19,9 @@
         <property name="keeper" column="keeper"/>
         <property name="accountant" column="accountant"/>
         <property name="status" column="status"/>
+        <set name="items" cascade="all" lazy="true" inverse="true">
+            <key column="orderid" not-null="false"/>
+            <one-to-many class="pojo.Historyitems"/>
+        </set>
     </class>
 </hibernate-mapping>

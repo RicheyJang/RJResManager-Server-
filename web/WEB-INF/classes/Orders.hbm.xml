@@ -12,6 +12,8 @@
         <property name="useclass" column="useclass"/>
         <property name="starttime" column="starttime"/>
         <property name="usetime" column="usetime"/>
+        <property name="backtime" column="backtime"/>
+        <property name="outtime" column="outtime"/>
         <property name="more" column="more"/>
         <property name="teacher" column="teacher"/>
         <property name="header" column="header"/>

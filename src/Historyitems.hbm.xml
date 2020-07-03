@@ -5,10 +5,11 @@
 <hibernate-mapping>
 
     <class name="pojo.Historyitems" table="historyitems" schema="finaltest">
-        <id name="orderid" column="orderid"/>
+        <id name="id" column="id"/>
         <property name="pid" column="pid"/>
         <property name="cnt" column="cnt"/>
         <property name="status" column="status"/>
         <property name="more" column="more"/>
+        <many-to-one name="order" cascade="save-update" class="pojo.Historyorder" column="orderid" />
     </class>
 </hibernate-mapping>

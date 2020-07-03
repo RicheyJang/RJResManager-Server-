@@ -14,6 +14,9 @@
         <property name="hibernate.format_sql">true</property>
         <property name="current_session_context_class">thread</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
+        <property name="hibernate.jdbc.batch_size">10</property>
+        <property name="hibernate.order_updates">true</property>
+        <property name="hibernate.order_inserts">true</property>
 
         <mapping resource="Allitems.hbm.xml"/>
         <mapping resource="Orderitems.hbm.xml"/>

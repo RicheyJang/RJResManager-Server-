@@ -7,14 +7,16 @@ import javax.persistence.Id;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
-@Entity
 public class Historyorder {
 	private int id;
 	private String workshop;
 	private String useclass;
 	private Date starttime;
 	private Timestamp usetime;
+	private Timestamp outtime;
+	private Timestamp backtime;
 	private String more;
 	private String teacher;
 	private String header;
@@ -22,6 +24,15 @@ public class Historyorder {
 	private String keeper;
 	private String accountant;
 	private String status;
+	private Set<Historyitems> items;
+
+	public Set<Historyitems> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<Historyitems> items) {
+		this.items = items;
+	}
 
 	@Id
 	@Column(name = "id", nullable = false)
@@ -72,6 +83,18 @@ public class Historyorder {
 	public void setUsetime(Timestamp usetime) {
 		this.usetime = usetime;
 	}
+
+	@Basic
+	@Column(name = "backtime", nullable = true)
+	public Timestamp getBacktime() { return backtime; }
+
+	public void setBacktime(Timestamp backtime) { this.backtime = backtime; }
+
+	@Basic
+	@Column(name = "outtime", nullable = true)
+	public Timestamp getOuttime() { return outtime; }
+
+	public void setOuttime(Timestamp outtime) { this.outtime = outtime; }
 
 	@Basic
 	@Column(name = "more", nullable = true, length = 50)

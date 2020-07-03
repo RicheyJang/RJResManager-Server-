@@ -8,39 +8,46 @@ import java.util.Objects;
 
 @Entity
 public class Historyitems {
-	private int orderid;
-	private int pid;
-	private int cnt;
+	private int id;
+	private long pid;
+	private double cnt;
 	private String status;
 	private String more;
+	private Historyorder order;
 
-	@Id
-	@Column(name = "orderid", nullable = false)
-	public int getOrderid() {
-		return orderid;
+	public Historyorder getOrder() {
+		return order;
 	}
 
-	public void setOrderid(int orderid) {
-		this.orderid = orderid;
+	public void setOrder(Historyorder order) {
+		this.order = order;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Basic
 	@Column(name = "pid", nullable = false)
-	public int getPid() {
+	public long getPid() {
 		return pid;
 	}
 
-	public void setPid(int pid) {
+	public void setPid(long pid) {
 		this.pid = pid;
 	}
 
 	@Basic
 	@Column(name = "cnt", nullable = false)
-	public int getCnt() {
+	public double getCnt() {
 		return cnt;
 	}
 
-	public void setCnt(int cnt) {
+	public void setCnt(double cnt) {
 		this.cnt = cnt;
 	}
 
@@ -69,7 +76,7 @@ public class Historyitems {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Historyitems that = (Historyitems) o;
-		return orderid == that.orderid &&
+		return id == that.id &&
 				pid == that.pid &&
 				cnt == that.cnt &&
 				Objects.equals(status, that.status) &&
@@ -78,6 +85,6 @@ public class Historyitems {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(orderid, pid, cnt, status, more);
+		return Objects.hash(id, pid, cnt, status, more);
 	}
 }
