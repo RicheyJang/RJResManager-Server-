@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 			response.setStatus(401);
 			return;
 		}
-		System.out.println("got it");
+		System.out.println("got it!someone is logging in!");
 		System.out.println(json.toString());
 
 		Session session= HibernateFactory.getSession();
@@ -56,22 +56,24 @@ public class LoginServlet extends HttpServlet {
 		List<User> list=query.list();
 		if(list.size()!=1)
 		{
-			System.out.println("401");
+			System.out.println("401 no such user");
 			response.setStatus(401);
 			session.close();
 			return;
 		}
 		User user=list.get(0);
+		//String SHA256inOne=user.getPassword(); TODO 双验证待实现
+		//String SHA256inTwice=SubFunc.getSHA256(SHA256inOne);
 		if(!user.getPassword().equals(password))//密码错误
 		{
-			System.out.println("403");
+			System.out.println("403 wrong password");
 			response.setStatus(403);
 			session.close();
 			return;
 		}
 		if(user.getIsUseful()==0)
 		{
-			System.out.println("401");
+			System.out.println("401 useless account");
 			response.setStatus(401);
 			session.close();
 			return;
@@ -80,9 +82,10 @@ public class LoginServlet extends HttpServlet {
 		Config config=Config.getConfig();
 		resjson.put("useName",config.selectName);
 		resjson.put("usePassword",config.selectPassword);
+		resjson.put("newClientVersion",config.newClientVersion);
 		response.setStatus(200);
 		response.getWriter().println(resjson.toJSONString());
-		System.out.println("success");
+		System.out.println("success logging id = "+user.getId());
 		session.close();
 	}
 
@@ -90,8 +93,8 @@ public class LoginServlet extends HttpServlet {
 		try {
 			response.getWriter().println("<h1>A Blank Page (almost)</h1>");
 			response.getWriter().println(new Date());
+			response.getWriter().println("Client Version : v"+Config.getConfig().newClientVersion);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
