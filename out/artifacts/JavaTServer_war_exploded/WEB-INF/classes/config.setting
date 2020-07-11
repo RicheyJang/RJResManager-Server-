@@ -1,0 +1,17 @@
+[server]
+ip = 127.0.0.1
+port = 2333
+[database]
+name = finaltest
+port = 3306
+selectName = ForSelect
+selectPassword = MyWeb008
+rootName = root
+rootPassword = admin
+[client]
+version = 0.0.1
+[items]
+outName = 耗材类
+rentName = 租赁类
+outStartWith = 1
+rentStartWith = 2

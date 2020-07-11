@@ -20,8 +20,8 @@ import pojo.*;
 public class LoginServlet extends HttpServlet {
 	public void init(ServletConfig config){
 		System.out.println("init of Servlet");
-		Session session=HibernateFactory.getSession();
 		Config configs=Config.getConfig();
+		Session session=HibernateFactory.getSession();
 		String hql="select status from Authority";
 		Query<String> query=session.createQuery(hql);
 		List<String> ls=query.list();

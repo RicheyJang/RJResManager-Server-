@@ -17,8 +17,11 @@ public class HibernateFactory {
 	static {
 		try {
 			Configuration configuration = new Configuration().configure();
-			configuration.setProperty("hibernate.connection.username",Config.getConfig().rootName);
-			configuration.setProperty("hibernate.connection.password",Config.getConfig().rootPassword);
+			Config configs=Config.getConfig();
+			String url="jdbc:mysql://localhost:"+configs.dataBasePort+"/"+configs.dataBaseName;
+			configuration.setProperty("hibernate.connection.url",url);
+			configuration.setProperty("hibernate.connection.username",configs.rootName);
+			configuration.setProperty("hibernate.connection.password",configs.rootPassword);
 			ourSessionFactory = configuration.buildSessionFactory();
 		} catch (Throwable ex) {
 			throw new ExceptionInInitializerError(ex);

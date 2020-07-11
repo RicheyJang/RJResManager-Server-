@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -26,18 +28,31 @@ public class NewOrderServlet extends HttpServlet {
 		{
 			System.out.println("未知用户发起订单");
 			response.setStatus(401);
-			return;
+			return ;
 		}
 		JSONObject userInf=json.getJSONObject("userInformation");
-		JSONObject orderInf=json.getJSONObject("orderInformation");
-		JSONArray itemsInf=json.getJSONArray("itemsInformation");
 		User user=DealServlet.getUser(userInf.getString("username"),userInf.getString("password"));
 		if(user==null)
 		{
 			System.out.println("未知用户发起订单");
 			response.setStatus(401);
-			return;
+			return ;
 		}
+		String forWhat=request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+		try {
+			Method method=getClass().getDeclaredMethod(forWhat,JSONObject.class,User.class);
+			method.invoke(this,json,user);
+		} catch (Exception e) {
+			System.out.println("no such method named : "+forWhat);
+			response.setStatus(401);
+		}
+	}
+
+	private void forOrder(JSONObject json,User user)
+	{
+		JSONObject orderInf=json.getJSONObject("orderInformation");
+		JSONArray itemsInf=json.getJSONArray("itemsInformation");
+
 		Orders order = new Orders();
 		order.setUseclass(orderInf.getString("useclass"));
 		order.setStarttime(orderInf.getSqlDate("starttime"));
@@ -52,17 +67,16 @@ public class NewOrderServlet extends HttpServlet {
 
 		Set <Orderitems> items=new HashSet<>();
 		System.out.println("a new order come!");
-		for (Iterator<Object> iterator = itemsInf.iterator(); iterator.hasNext(); ) {
-			JSONObject itemInf = (JSONObject) iterator.next();
-			if(itemInf!=null)
-			{
-				Orderitems item=new Orderitems();
+		for (Object o : itemsInf) {
+			JSONObject itemInf = (JSONObject) o;
+			if (itemInf != null) {
+				Orderitems item = new Orderitems();
 				item.setPid(itemInf.getInteger("pid"));
 				item.setCnt(itemInf.getDouble("cnt"));
 				item.setMore(itemInf.getString("more"));
 				item.setStatus("待审核");
 				item.setOrder(order);
-				System.out.println("items count:"+item.getCnt());
+				System.out.println("items count:" + item.getCnt());
 				items.add(item);
 			}
 		}
@@ -73,6 +87,9 @@ public class NewOrderServlet extends HttpServlet {
 		session.getTransaction().commit();
 		session.close();
 	}
+
+	private void forItemOrder(JSONObject json,User user)
+	{}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//nothing
