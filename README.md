@@ -7,9 +7,11 @@
 
 2、下载releases中的最新版本压缩包
 
-3、下载安装5.7版本的Mysql数据库，并创建名为RJdata的新数据库，随后将压缩包中的数据库备份文件data.sql导入该数据库。
+3、下载安装5.7版本的Mysql数据库，并创建名为RJdata的新数据库，随后将压缩包中的数据库备份文件data.sql导入该数据库。创建一个管理员账号、一个只有select权限的账号。
 
-4、根据您的系统运行tomcat\bin下的startup
+4、配置tomcat\webapp\web\classes\config.setting文件，主要包括上述两个账号信息，管理员账号填写在root下，仅select账号填写在select下。
+
+5、根据您的系统运行tomcat\bin下的startup
 
 ## 执行流程？
 

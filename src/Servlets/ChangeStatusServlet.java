@@ -63,7 +63,6 @@ public class ChangeStatusServlet extends HttpServlet {
 			return;
 		}
 		JSONObject userInf=json.getJSONObject("userInformation");
-		JSONObject orderInf=json.getJSONObject("orderInformation");
 		User user=DealServlet.getUser(userInf.getString("username"),userInf.getString("password"));
 		if(user==null)
 		{
@@ -71,68 +70,84 @@ public class ChangeStatusServlet extends HttpServlet {
 			response.setStatus(401);
 			return;
 		}
+
+		JSONObject orderInf=json.getJSONObject("orderInformation");
+
+		JSONArray theOrders=orderInf.getJSONArray("theOrders");
+		Boolean isSame=orderInf.getBoolean("isSame");
 		String toStatus=orderInf.getString("status");
-		if(!userCheck(user,toStatus)) //用户身份检查
-		{
-			System.out.println("该用户无权修改");
-			response.setStatus(402);
-			return;
+		String[] stls=Config.getConfig().statusList;
+
+		if(isSame){
+			if(!userCheck(user,toStatus)) //用户身份检查
+			{
+				System.out.println("该用户无权修改");
+				response.setStatus(402);
+				return;
+			}
 		}
 
 		Session session= HibernateFactory.getSession();
 		session.beginTransaction();
 
-		int id=orderInf.getInteger("id");
-		Orders order =(Orders) session.get(Orders.class, id); //获取订单信息
-		String[] stls=Config.getConfig().statusList;
-		if(order==null) //订单不存在
-		{
-			System.out.println("订单不存在");
-			response.setStatus(403);
-			session.close();
-			return;
-		}
-		System.out.println("someone is changing this order's status!");
-		System.out.println("orderid : "+order.getId());
-		if(toStatus.compareTo(Config.getConfig().statusList[0])==0) //撤回订单
-		{
-			if(!checkDelAble(user,order))
-			{
-				System.out.println("该用户无权撤回该订单");
-				response.setStatus(402);
-				session.close();
-				return;
+		for (Object o : theOrders) {
+			JSONObject aOrder=(JSONObject) o;
+			int id=aOrder.getInteger("id");
+			if(!isSame){
+				toStatus=aOrder.getString("status");
+				if(!userCheck(user,toStatus)) { //用户身份检查
+					System.out.println("该用户(id= "+user.getId()+")无权修改order id="+id);
+					response.setStatus(402);
+					continue;
+				}
 			}
-			session.delete(order);
-			session.getTransaction().commit();
-			session.close();
-			return;
-		}
-		if(toStatus.compareTo(stls[2])==0 || toStatus.compareTo(stls[3])==0) //主任 车间信息检查
-		{
-			if(user.getWorkshop().compareTo(order.getWorkshop())!=0)
+
+			Orders order =(Orders) session.get(Orders.class, id); //获取订单信息
+			if(order==null) //订单不存在
 			{
-				System.out.println("该用户无权修改");
-				response.setStatus(402);
-				session.close();
-				return;
+				System.out.println("订单不存在 id="+id);
+				response.setStatus(403);
+				continue;
 			}
+
+			System.out.println("someone is changing this order's status!");
+			System.out.println("orderid : "+order.getId());
+			if(toStatus.compareTo(Config.getConfig().statusList[0])==0) //撤回订单
+			{
+				if(!checkDelAble(user,order))
+				{
+					System.out.println("该用户(id= "+user.getId()+")无权撤回order id="+id);
+					response.setStatus(402);
+					continue;
+				}
+				session.delete(order);
+				continue;
+			}
+			if(toStatus.compareTo(stls[2])==0 || toStatus.compareTo(stls[3])==0) //主任 车间信息检查
+			{
+				if(user.getWorkshop().compareTo(order.getWorkshop())!=0)
+				{
+					System.out.println("该用户(id= "+user.getId()+")无权修改order id="+id);
+					response.setStatus(402);
+					continue;
+				}
+			}
+
+			order.setStatus(toStatus);
+			if(toStatus.compareTo(stls[1])!=0)
+			{
+				String s=user.getIdentity(); //反射 修改订单修改者名
+				s="set"+s.toUpperCase().charAt(0)+s.substring(1);
+				try {
+					Method method=order.getClass().getMethod(s,String.class);
+					method.invoke(order,user.getTruename());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			session.update(order);
 		}
 
-		order.setStatus(toStatus);
-		if(toStatus.compareTo(Config.getConfig().statusList[1])!=0)
-		{
-			String s=user.getIdentity(); //反射 修改订单修改者名
-			s="set"+s.toUpperCase().charAt(0)+s.substring(1);
-			try {
-				Method method=order.getClass().getMethod(s,String.class);
-				method.invoke(order,user.getTruename());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		session.update(order);
 		session.getTransaction().commit();
 		session.close();
 	}
