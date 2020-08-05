@@ -22,6 +22,7 @@ public class Orders {
 	private String accountant;
 	private String status;
 	private Set<Orderitems> items;
+	private Set<Newitems> newItems;
 
 	@Id
 	@Column(name = "id", nullable = false)
@@ -36,6 +37,14 @@ public class Orders {
 	public Set<Orderitems> getItems() { return items; }
 
 	public void setItems(Set<Orderitems> items) { this.items = items; }
+
+	public Set<Newitems> getNewItems() {
+		return newItems;
+	}
+
+	public void setNewItems(Set<Newitems> newItems) {
+		this.newItems = newItems;
+	}
 
 	@Basic
 	@Column(name = "workshop", nullable = true, length = 12)

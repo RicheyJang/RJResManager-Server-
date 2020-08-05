@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 public class Allitems {
-	private long pid;
+	private int pid;
 	private String res;
 	private String name;
 	private String type;
@@ -17,11 +17,11 @@ public class Allitems {
 
 	@Id
 	@Column(name = "pid", nullable = false)
-	public long getPid() {
+	public int getPid() {
 		return pid;
 	}
 
-	public void setPid(long pid) {
+	public void setPid(int pid) {
 		this.pid = pid;
 	}
 

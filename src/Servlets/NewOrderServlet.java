@@ -14,10 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import ToolFunc.*;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import pojo.*;
 
 @WebServlet(name = "NewOrderServlet")
@@ -89,7 +91,47 @@ public class NewOrderServlet extends HttpServlet {
 	}
 
 	private void forItemOrder(JSONObject json,User user)
-	{}
+	{
+		JSONObject orderInf=json.getJSONObject("orderInformation");
+		JSONArray itemsInf=json.getJSONArray("itemsInformation");
+
+		Orders order = new Orders();
+		order.setStarttime(orderInf.getSqlDate("starttime"));
+		order.setMore(orderInf.getString("more"));
+		order.setStatus(Config.getConfig().statusList[9]);
+		order.setTeacher("");
+		order.setHeader("");
+		order.setAdmin("");
+		order.setKeeper(user.getTruename());
+		order.setAccountant("");
+
+		Set <Newitems> items=new HashSet<>();
+		System.out.println("a new resIn order come!");
+		for (Object o : itemsInf) {
+			JSONObject itemInf = (JSONObject) o;
+			if (itemInf != null) {
+				Newitems item = new Newitems();
+				item.setIsNew(itemInf.getByte("isNew"));
+				item.setPid(itemInf.getInteger("pid"));
+				item.setCnt(itemInf.getDouble("cnt"));
+				item.setMore(itemInf.getString("more"));
+				item.setRes(itemInf.getString("res"));
+				item.setName(itemInf.getString("name"));
+				item.setType(itemInf.getString("type"));
+				item.setUnits(itemInf.getString("units"));
+				item.setStatus("待审核");
+
+				item.setOrder(order);
+				items.add(item);
+			}
+		}
+		order.setNewItems(items);
+		Session session=HibernateFactory.getSession();
+		session.beginTransaction();
+		session.save(order);
+		session.getTransaction().commit();
+		session.close();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//nothing

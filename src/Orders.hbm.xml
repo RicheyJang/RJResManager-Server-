@@ -25,5 +25,9 @@
             <key column="orderid" not-null="false"/>
             <one-to-many class="pojo.Orderitems"/>
         </set>
+        <set name="newItems" cascade="all" lazy="true" inverse="true">
+            <key column="orderid" not-null="false"/>
+            <one-to-many class="pojo.Newitems"/>
+        </set>
     </class>
 </hibernate-mapping>

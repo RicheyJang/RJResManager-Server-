@@ -28,7 +28,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ChangeOrderServlet</servlet-name>
-        <url-pattern>/changeorder</url-pattern>
+        <url-pattern>/change/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

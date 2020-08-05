@@ -12,6 +12,7 @@
         <property name="hibernate.jdbc.batch_size">10</property>
         <property name="hibernate.order_updates">true</property>
         <property name="hibernate.order_inserts">true</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/finaltest</property>
 
         <mapping resource="Allitems.hbm.xml"/>
         <mapping resource="Orderitems.hbm.xml"/>
@@ -20,6 +21,7 @@
         <mapping resource="Authority.hbm.xml"/>
         <mapping resource="Historyitems.hbm.xml"/>
         <mapping resource="Historyorder.hbm.xml"/>
+        <mapping resource="Newitems.hbm.xml"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->

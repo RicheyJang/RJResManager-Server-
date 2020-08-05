@@ -39,12 +39,10 @@ public class ChangeStatusServlet extends HttpServlet {
 			return false;
 		Integer ide=ls.get(0);
 		session.close();
-		return (ide==2 || ide==3);
+		return (ide&2)!=0;
 	}
 	private boolean checkDelAble(User user,Orders order) //订单能否撤回检测
 	{
-		if(order.getTeacher().compareTo(user.getTruename())!=0)
-			return false;
 		String[] ls=Config.getConfig().statusList;
 		int i;
 		for(i=0;i<ls.length;i++)
@@ -52,7 +50,15 @@ public class ChangeStatusServlet extends HttpServlet {
 			if(order.getStatus().compareTo(ls[i])==0)
 				break;
 		}
-		return i<=4;
+		if(i<=4)
+		{
+			return order.getTeacher().compareTo(user.getTruename()) == 0;
+		}
+		else if(i>=9)
+		{
+			return order.getKeeper().compareTo(user.getTruename()) == 0;
+		}
+		return false;
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONObject json= DealServlet.getRequestJsonObject(request);
