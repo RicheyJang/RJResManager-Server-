@@ -3,6 +3,8 @@ ip = 127.0.0.1
 port = 2333
 [database]
 name = finaltest
+binPath = D:\Mysql\mysql-5.7.29-win32\bin\
+backupPath = ./
 port = 3306
 selectName = ForSelect
 selectPassword = MyWeb008

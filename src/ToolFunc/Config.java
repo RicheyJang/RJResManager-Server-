@@ -10,6 +10,8 @@ public class Config {
 	public String ip;
 	public int port;
 	public String dataBaseName;
+	public String dataBackupPath;
+	public String dataBinPath;
 	public int dataBasePort;
 	public String selectName;
 	public String selectPassword;
@@ -30,6 +32,8 @@ public class Config {
 			setting.set("server","ip","127.0.0.1");
 			setting.set("server","port","2333");
 			setting.set("database","name","finaltest");
+			setting.set("database","binPath","D:\\Mysql\\mysql-5.7.29-win32\\bin\\");
+			setting.set("database","backupPath","./");
 			setting.set("database","port","3306");
 			setting.set("database","selectName","ForSelect");
 			setting.set("database","selectPassword","MyWeb008");
@@ -48,6 +52,8 @@ public class Config {
 		ip=setting.get("server","ip");
 		port=Integer.parseInt(setting.get("server","port"));
 		dataBaseName=setting.get("database","name");
+		dataBackupPath=setting.get("database","backupPath");
+		dataBinPath=setting.get("database","binPath");
 		dataBasePort=Integer.parseInt(setting.get("database","port"));;
 		selectName=setting.get("database","selectName");
 		selectPassword=setting.get("database","selectPassword");

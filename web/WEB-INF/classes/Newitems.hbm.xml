@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Newitems" table="newitems" schema="finaltest">
+        <id name="id" column="id">
+            <generator class="native"></generator>
+        </id>
+        <property name="pid" column="pid"/>
+        <property name="isNew" column="isNew"/>
+        <property name="cnt" column="cnt"/>
+        <property name="res" column="res"/>
+        <property name="name" column="name"/>
+        <property name="type" column="type"/>
+        <property name="units" column="units"/>
+        <property name="status" column="status"/>
+        <property name="more" column="more"/>
+        <many-to-one name="order" cascade="save-update" class="pojo.Orders" column="orderid" />
+    </class>
+</hibernate-mapping>
