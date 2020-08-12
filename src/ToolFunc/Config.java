@@ -17,9 +17,12 @@ public class Config {
 	public String selectPassword;
 	public String rootName;
 	public String rootPassword;
+	public String userInitPassword;
 	public String newClientVersion;
 	public String[] statusList; //状态名列表：0~8查authority表，0代表撤销订单
 	public String[] itemsList; //物品大类名列表：耗材类、租赁类
+	public String[] identityList; //身份名列表
+
 	public char[] itemStartWith;
 	private static Config config=null;
 	private Config()
@@ -40,6 +43,7 @@ public class Config {
 			setting.set("database","rootName","root");
 			setting.set("database","rootPassword","admin");
 			setting.set("client","version","0.0.1");
+			setting.set("user","initPassword","000000");
 			setting.set("items","outName","耗材类");
 			setting.set("items","rentName","租赁类");
 			setting.set("items","outStartWith","1");
@@ -66,6 +70,12 @@ public class Config {
 		itemStartWith=new char[2];
 		itemStartWith[0]=setting.get("items","outStartWith").charAt(0);
 		itemStartWith[1]=setting.get("items","rentStartWith").charAt(0);
+		userInitPassword=setting.get("user","initPassword");
+		identityList=new String[4];
+		identityList[0]="teacher";
+		identityList[1]="header";
+		identityList[2]="admin";
+		identityList[3]="keeper";
 	}
 	public static Config getConfig() {
 		if(config==null)

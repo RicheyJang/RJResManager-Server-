@@ -48,9 +48,17 @@
         <servlet-name>FinishOrderServlet</servlet-name>
         <servlet-class>Servlets.FinishOrderServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>FinishOrderServlet</servlet-name>
         <url-pattern>/finishorder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserManageServlet</servlet-name>
+        <servlet-class>Servlets.UserManageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManageServlet</servlet-name>
+        <url-pattern>/user/*</url-pattern>
     </servlet-mapping>
 </web-app>

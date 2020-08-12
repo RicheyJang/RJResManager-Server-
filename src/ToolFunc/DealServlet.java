@@ -62,7 +62,7 @@ public class DealServlet {
 	}
 	public static User getUser(String username,String password)
 	{
-		if(username==null || password==null || !SubFunc.checkUsername(username))
+		if(password == null || !SubFunc.checkUsername(username))
 		{
 			return null;
 		}

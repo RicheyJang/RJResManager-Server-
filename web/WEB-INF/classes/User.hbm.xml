@@ -5,8 +5,8 @@
 <hibernate-mapping>
 
     <class name="pojo.User" table="user" schema="finaltest">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
+        <id name="id" column="id">
+            <generator class="native"/>
         </id>
         <property name="username">
             <column name="username" sql-type="varchar(25)" length="25"/>
@@ -18,7 +18,7 @@
             <column name="truename" sql-type="varchar(10)" length="10"/>
         </property>
         <property name="isOnline">
-            <column name="isOnline" sql-type="tinyint(1)" not-null="true"/>
+            <column name="isOnline" sql-type="tinyint(1)"/>
         </property>
         <property name="isUseful">
             <column name="isUseful" sql-type="tinyint(1)"/>

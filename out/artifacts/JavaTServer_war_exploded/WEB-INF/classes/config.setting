@@ -12,6 +12,8 @@ rootName = root
 rootPassword = admin
 [client]
 version = 0.0.1
+[user]
+initPassword = 000000
 [items]
 outName = 耗材类
 rentName = 租赁类
