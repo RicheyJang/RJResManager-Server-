@@ -33,6 +33,11 @@ public class SubFunc {
 		session.close();
 		return true;
 	}
+	public static boolean checkSHA256(String crypto)
+	{
+		String reg="^([a-f0-9]){64}$";
+		return crypto.matches(reg);
+	}
 	public static boolean checkUsername(String name)
 	{
 		if(name==null) return false;

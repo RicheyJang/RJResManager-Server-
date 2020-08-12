@@ -138,7 +138,13 @@ public class UserManageServlet extends HttpServlet {
 		}
 		if(applyOne.containsKey("password"))
 		{
-			theOne.setPassword(applyOne.getString("password"));
+			s=applyOne.getString("password");
+			if(!SubFunc.checkSHA256(s))
+			{
+				session.close();
+				return 0;
+			}
+			theOne.setPassword(s);
 		}
 		if(applyOne.containsKey("isUseful"))
 		{
