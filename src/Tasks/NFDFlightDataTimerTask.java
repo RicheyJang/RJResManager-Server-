@@ -13,7 +13,6 @@ public class NFDFlightDataTimerTask extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			//在这里写你要执行的内容
 			System.out.println("time task in working mysqldump!");
 			System.out.println("task result : "+backupWindow());
 		} catch (Exception e) {

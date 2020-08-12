@@ -28,7 +28,8 @@ public class Config {
 	private Config()
 	{
 		Setting setting;
-		if(!FileUtil.isFile("config.setting"))
+		String fileName="../../config.setting";
+		if(!FileUtil.isFile(fileName))
 		{
 			setting=new Setting();
 			setting.setCharset(CharsetUtil.CHARSET_UTF_8);
@@ -48,7 +49,7 @@ public class Config {
 			setting.set("items","rentName","租赁类");
 			setting.set("items","outStartWith","1");
 			setting.set("items","rentStartWith","2");
-			setting.store("config.setting");
+			setting.store(fileName);
 		} else {
 			System.out.println("read config.setting out!");
 			setting=new Setting("config.setting", CharsetUtil.CHARSET_UTF_8,true);
