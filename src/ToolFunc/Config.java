@@ -28,7 +28,7 @@ public class Config {
 	private Config()
 	{
 		Setting setting;
-		String fileName="../../config.setting";
+		String fileName="config.setting";
 		if(!FileUtil.isFile(fileName))
 		{
 			setting=new Setting();
@@ -51,8 +51,9 @@ public class Config {
 			setting.set("items","rentStartWith","2");
 			setting.store(fileName);
 		} else {
-			System.out.println("read config.setting out!");
-			setting=new Setting("config.setting", CharsetUtil.CHARSET_UTF_8,true);
+			setting=new Setting(fileName);
+			setting.setCharset(CharsetUtil.CHARSET_UTF_8);
+			System.out.println("read config.setting out!"+setting.getSettingPath());
 		}
 		ip=setting.get("server","ip");
 		port=Integer.parseInt(setting.get("server","port"));
